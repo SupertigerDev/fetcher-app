@@ -1,0 +1,46 @@
+.list {
+  display: flex;
+  user-select: none;
+  gap: 4px;
+  button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 6px;
+    border: solid 1px transparent;
+    border-radius: 8px;
+    outline: none;
+    color: rgba(255, 255, 255, 0.6);
+    background-color: black;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 16px;
+    &:before {
+      position: absolute;
+      bottom: 0;
+      width: 0%;
+      height: 2px;
+      border-radius: 8px;
+      content: "";
+      transition: all 0.2s ease-in-out;
+    }
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      background-color: rgba(255, 255, 255, 0.15);
+      &:before {
+        width: 10%;
+        background-color: rgba(109, 255, 199, 0.377);
+      }
+    }
+    &.active {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      background-color: rgba(255, 255, 255, 0.2);
+      &:before {
+        width: 50%;
+        background-color: rgb(109, 255, 199);
+      }
+    }
+  }
+}
