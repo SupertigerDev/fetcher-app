@@ -2,9 +2,9 @@ import { useState } from "react";
 import style from "./App.module.scss";
 import { Input } from "./Input";
 import { RequestType, RequestTypeList } from "./RequestTypeList";
-import { ResponseList, ResponseType } from "./ResponseList";
 import { RequestResponseDetailsHeader } from "./RequestResponseDetailsHeader";
 import { textFetcher, TextFetcherResult } from "./Fetcher";
+import { RequestResponsePane } from "./RequestResponsePane";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -46,32 +46,10 @@ function App() {
         <RequestResponseDetailsHeader res={fetcherResult} />
       )}
       {fetcherResult && !isWebsocket && (
-        <RequestResponseContainer res={fetcherResult} />
+        <RequestResponsePane res={fetcherResult} />
       )}
     </>
   );
 }
-
-const RequestResponseContainer = (props: { res: TextFetcherResult }) => {
-  const [responseType, setResponseType] = useState<ResponseType>("RAW");
-
-  return (
-    <>
-      <ResponseList selectedId={responseType} onChange={setResponseType} />
-      <div className={style.responseContainer}>
-        {responseType === "RAW" && (
-          <pre className={style.rawResponse}>{props.res.text}</pre>
-        )}
-        {responseType === "PREVIEW" && (
-          <iframe
-            className={style.responseIframe}
-            srcDoc={props.res.text}
-            sandbox=""
-          ></iframe>
-        )}
-      </div>
-    </>
-  );
-};
 
 export default App;
