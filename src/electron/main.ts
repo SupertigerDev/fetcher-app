@@ -15,7 +15,8 @@ function createWindow() {
     height: 600,
     // backgroundMaterial: "mica",
 
-    frame: false,
+    frame: true,
+    autoHideMenuBar: true,
     webPreferences: {
       webSecurity: false,
       // preload: join(__dirname, "preload.js"),
@@ -23,7 +24,7 @@ function createWindow() {
   });
 
   mainWindow.loadURL("http://localhost:5173");
-  mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools({ mode: "detach" });
   // if (isDev) {
   // } else {
   //   mainWindow.loadFile("dist/index.html");

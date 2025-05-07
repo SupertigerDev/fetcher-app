@@ -3,20 +3,24 @@ import style from "./App.module.scss";
 import { Input } from "./Input";
 import { RequestType, RequestTypeList } from "./RequestTypeList";
 import { ResponseList, ResponseType } from "./ResponseList";
+import { RequestResponseDetailsHeader } from "./RequestResponseDetailsHeader";
+import { textFetcher, TextFetcherResult } from "./Fetcher";
 
 function App() {
   const [url, setUrl] = useState("");
   const [requestType, setRequestType] = useState<RequestType>("GET");
-  const [responseType, setResponseType] = useState<ResponseType>("RAW");
 
-  const [res, setRes] = useState<string | null>(null);
+  const [fetcherResult, setFetcherResult] = useState<TextFetcherResult | null>(
+    null
+  );
 
   const onSend = async () => {
-    const res = await fetch(url, { method: requestType }).then((res) =>
-      res.text()
-    );
-    setRes(res);
+    const res = await textFetcher(url, requestType);
+
+    setFetcherResult(res);
   };
+
+  const isWebsocket = requestType === "WS";
 
   return (
     <>
@@ -35,28 +39,39 @@ function App() {
           type="url"
         />
         <button className={style.sendButton} onClick={onSend}>
-          Send
+          {isWebsocket ? "Connect" : "Send"}
         </button>
       </div>
-      {res && (
-        <>
-          <ResponseList selectedId={responseType} onChange={setResponseType} />
-          <div className={style.responseContainer}>
-            {responseType === "RAW" ? (
-              <pre className={style.rawResponse}>{res}</pre>
-            ) : (
-              <iframe
-                style={{}}
-                className={style.responseIframe}
-                srcDoc={res}
-                sandbox=""
-              ></iframe>
-            )}
-          </div>
-        </>
+      {fetcherResult && !isWebsocket && (
+        <RequestResponseDetailsHeader res={fetcherResult} />
+      )}
+      {fetcherResult && !isWebsocket && (
+        <RequestResponseContainer res={fetcherResult} />
       )}
     </>
   );
 }
+
+const RequestResponseContainer = (props: { res: TextFetcherResult }) => {
+  const [responseType, setResponseType] = useState<ResponseType>("RAW");
+
+  return (
+    <>
+      <ResponseList selectedId={responseType} onChange={setResponseType} />
+      <div className={style.responseContainer}>
+        {responseType === "RAW" && (
+          <pre className={style.rawResponse}>{props.res.text}</pre>
+        )}
+        {responseType === "PREVIEW" && (
+          <iframe
+            className={style.responseIframe}
+            srcDoc={props.res.text}
+            sandbox=""
+          ></iframe>
+        )}
+      </div>
+    </>
+  );
+};
 
 export default App;

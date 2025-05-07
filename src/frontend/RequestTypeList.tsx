@@ -5,6 +5,7 @@ const RequestTypeItems = [
   { id: "POST", name: "POST" },
   { id: "PUT", name: "PUT" },
   { id: "DELETE", name: "DELETE" },
+  { id: "WS", name: "WS" },
 ] as const satisfies ListItem[];
 
 export type RequestType = (typeof RequestTypeItems)[number]["id"];
