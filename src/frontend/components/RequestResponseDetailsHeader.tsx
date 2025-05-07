@@ -1,4 +1,4 @@
-import { TextFetcherResult } from "./Fetcher";
+import { TextFetcherResult } from "../Fetcher";
 import style from "./RequestResponseDetailsHeader.module.scss";
 import { getResponseCodeDetails, ResponseCodes } from "./ResponseCodes";
 

@@ -1,6 +1,6 @@
 import style from "./RequestResponsePane.module.scss";
-import { useEffect, useState } from "react";
-import { TextFetcherResult } from "./Fetcher";
+import { useState } from "react";
+import { TextFetcherResult } from "../Fetcher";
 import { ResponseList, ResponseType } from "./ResponseList";
 import { Editor } from "@monaco-editor/react";
 

@@ -1,4 +1,4 @@
-import { RequestType } from "./RequestTypeList";
+import { RequestType } from "./components/RequestTypeList";
 export interface TextFetcherResult {
   response: Response;
   text: string;

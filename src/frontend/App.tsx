@@ -1,10 +1,11 @@
 import { useState } from "react";
 import style from "./App.module.scss";
-import { Input } from "./Input";
-import { RequestType, RequestTypeList } from "./RequestTypeList";
-import { RequestResponseDetailsHeader } from "./RequestResponseDetailsHeader";
+import { Input } from "./components/Input";
+import { RequestType, RequestTypeList } from "./components/RequestTypeList";
+import { RequestResponseDetailsHeader } from "./components/RequestResponseDetailsHeader";
 import { textFetcher, TextFetcherResult } from "./Fetcher";
-import { RequestResponsePane } from "./RequestResponsePane";
+import { RequestResponsePane } from "./components/RequestResponsePane";
+import { WebSocketPane } from "./components/WebSocketPane";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -20,7 +21,7 @@ function App() {
     setFetcherResult(res);
   };
 
-  const isWebsocket = requestType === "WS";
+  const isWebSocket = requestType === "WS";
 
   return (
     <>
@@ -39,15 +40,17 @@ function App() {
           type="url"
         />
         <button className={style.sendButton} onClick={onSend}>
-          {isWebsocket ? "Connect" : "Send"}
+          {isWebSocket ? "Connect" : "Send"}
         </button>
       </div>
-      {fetcherResult && !isWebsocket && (
+      {fetcherResult && !isWebSocket && (
         <RequestResponseDetailsHeader res={fetcherResult} />
       )}
-      {fetcherResult && !isWebsocket && (
+      {fetcherResult && !isWebSocket && (
         <RequestResponsePane res={fetcherResult} />
       )}
+
+      {isWebSocket && <WebSocketPane res={fetcherResult} />}
     </>
   );
 }
