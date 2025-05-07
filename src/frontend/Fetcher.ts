@@ -4,6 +4,7 @@ export interface TextFetcherResult {
   text: string;
   requestTime: number;
   totalTime: number;
+  startTime: number;
 }
 export const textFetcher = async (url: string, requestType: RequestType) => {
   const startTime = Date.now();
@@ -11,5 +12,11 @@ export const textFetcher = async (url: string, requestType: RequestType) => {
   const requestTime = Date.now() - startTime;
   const text = await response.text();
   const totalTime = Date.now() - startTime;
-  return { response, text, requestTime, totalTime } as TextFetcherResult;
+  return {
+    response,
+    text,
+    requestTime,
+    totalTime,
+    startTime,
+  } as TextFetcherResult;
 };

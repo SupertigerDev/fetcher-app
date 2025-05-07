@@ -1,6 +1,7 @@
 import { List, ListItem } from "./List";
 
 const ResponseItems = [
+  { id: "PRETTY", name: "Pretty" },
   { id: "RAW", name: "Raw" },
   { id: "PREVIEW", name: "Preview" },
 ] as const satisfies ListItem[];

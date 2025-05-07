@@ -28,7 +28,6 @@ export const RequestResponseDetailsHeader = (props: {
   const time = props.res.totalTime;
   const timeColor = getRequestTimeColor(time);
 
-  console.log(props.res.response.statusText);
   return (
     <div className={style.header}>
       <div>

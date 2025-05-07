@@ -28,3 +28,7 @@ body {
   margin: 8px;
   gap: 8px;
 }
+
+.monaco-editor .cursors-layer > .cursor {
+  display: none !important;
+}
