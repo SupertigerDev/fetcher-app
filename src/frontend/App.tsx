@@ -28,6 +28,9 @@ function App() {
     setFetcherResult(res);
   };
 
+  const noResponse =
+    (isWebSocket && !ws.events.length) || (!isWebSocket && !fetcherResult);
+
   return (
     <>
       <RequestTypeList selectedId={requestType} onChange={setRequestType} />
@@ -55,7 +58,14 @@ function App() {
         <RequestResponsePane res={fetcherResult} />
       )}
 
-      {isWebSocket && <WebSocketPane ws={ws} />}
+      {isWebSocket && ws.events.length > 0 && <WebSocketPane ws={ws} />}
+
+      {noResponse && (
+        <div className={style.noResponseContainer}>
+          Enter URL and select request type. <br />
+          Click "{isWebSocket ? "Connect" : "Send"}" to start.
+        </div>
+      )}
     </>
   );
 }

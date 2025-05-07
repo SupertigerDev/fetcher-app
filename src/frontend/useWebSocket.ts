@@ -4,7 +4,7 @@ export interface WebSocketEvent {
   id: string;
   createdAt: number;
   data?: string;
-  type: "MESSAGE" | "CLOSE" | "OPEN";
+  type: "MESSAGE" | "CLOSE" | "OPEN" | "CONNECTING";
 }
 
 export const useWebSocket = () => {
@@ -14,7 +14,15 @@ export const useWebSocket = () => {
 
   const connect = (url: string) => {
     setEvents([]);
+    if (ws.current) {
+      ws.current.onclose = null;
+    }
     ws.current?.close();
+
+    setEvents([
+      { id: crypto.randomUUID(), type: "CONNECTING", createdAt: Date.now() },
+    ]);
+
     ws.current = new WebSocket(url);
     ws.current.onopen = () => {
       console.log("open");

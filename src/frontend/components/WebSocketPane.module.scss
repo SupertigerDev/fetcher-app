@@ -23,6 +23,7 @@
     display: flex;
     gap: 4px;
     .darkText {
+      --CONNECTING: rgb(255, 164, 122);
       --OPEN: rgb(103, 255, 166);
       --MESSAGE: rgb(107, 176, 255);
       --CLOSE: rgb(255, 91, 91);

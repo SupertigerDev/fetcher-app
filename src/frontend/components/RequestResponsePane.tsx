@@ -1,5 +1,5 @@
 import style from "./RequestResponsePane.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextFetcherResult } from "../Fetcher";
 import { ResponseList, ResponseType } from "./ResponseList";
 import { Editor } from "@monaco-editor/react";
@@ -20,6 +20,10 @@ const getExtensionFromContentType = (contentType: string) => {
 
 export const RequestResponsePane = (props: { res: TextFetcherResult }) => {
   const [responseType, setResponseType] = useState<ResponseType>("PRETTY");
+
+  useEffect(() => {
+    setResponseType("PRETTY");
+  }, [props.res]);
 
   return (
     <div className={style.requestResponsePane}>
@@ -53,12 +57,14 @@ export const PrettyResponse = (props: { res: TextFetcherResult }) => {
       theme={darkTheme ? "vs-dark" : undefined}
       defaultValue={props.res.text}
       onMount={(editor) => {
-        editor.getAction("editor.action.formatDocument")?.run();
+        editor
+          .getAction("editor.action.formatDocument")
+          ?.run()
+          .then(() => {
+            editor.updateOptions({ readOnly: true });
+          });
       }}
-      options={{
-        domReadOnly: true,
-        readOnly: true,
-      }}
+      options={{ domReadOnly: true }}
     />
   );
 };
