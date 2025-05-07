@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "./App.module.scss";
 import { Input } from "./components/Input";
 import { RequestType, RequestTypeList } from "./components/RequestTypeList";
-import { RequestResponseDetailsHeader } from "./components/RequestResponseDetailsHeader";
+import { Footer } from "./components/Footer";
 import { textFetcher, TextFetcherResult } from "./Fetcher";
 import { RequestResponsePane } from "./components/RequestResponsePane";
 import { WebSocketPane } from "./components/WebSocketPane";
@@ -52,9 +52,6 @@ function App() {
         </button>
       </div>
       {fetcherResult && !isWebSocket && (
-        <RequestResponseDetailsHeader res={fetcherResult} />
-      )}
-      {fetcherResult && !isWebSocket && (
         <RequestResponsePane res={fetcherResult} />
       )}
 
@@ -66,6 +63,8 @@ function App() {
           Click "{isWebSocket ? "Connect" : "Send"}" to start.
         </div>
       )}
+      <Footer res={fetcherResult} />
+
     </>
   );
 }

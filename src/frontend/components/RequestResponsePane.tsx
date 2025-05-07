@@ -1,8 +1,9 @@
 import style from "./RequestResponsePane.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TextFetcherResult } from "../Fetcher";
 import { ResponseList, ResponseType } from "./ResponseList";
-import { Editor } from "@monaco-editor/react";
+import { Editor, OnMount } from "@monaco-editor/react";
+import { useTheme } from "../theme";
 
 const contentTypeToExtensionMap: Record<string, string> = {
   "application/json": "json",
@@ -21,9 +22,12 @@ const getExtensionFromContentType = (contentType: string) => {
 export const RequestResponsePane = (props: { res: TextFetcherResult }) => {
   const [responseType, setResponseType] = useState<ResponseType>("PRETTY");
 
+
   useEffect(() => {
     setResponseType("PRETTY");
   }, [props.res]);
+
+
 
   return (
     <div className={style.requestResponsePane}>
@@ -49,6 +53,12 @@ export const RequestResponsePane = (props: { res: TextFetcherResult }) => {
 
 export const PrettyResponse = (props: { res: TextFetcherResult }) => {
   const darkTheme = document.body.classList.contains("dark");
+  const {onThemeChanged} = useTheme();
+  const editorRef = useRef<Parameters<OnMount>[0]>(null);
+  onThemeChanged((theme) => {
+    editorRef.current?.updateOptions({theme: theme === "dark" ? "vs-dark" : "vs-light"})
+  })
+
   return (
     <Editor
       defaultLanguage={getExtensionFromContentType(
@@ -57,6 +67,7 @@ export const PrettyResponse = (props: { res: TextFetcherResult }) => {
       theme={darkTheme ? "vs-dark" : undefined}
       defaultValue={props.res.text}
       onMount={(editor) => {
+        editorRef.current = editor;
         editor
           .getAction("editor.action.formatDocument")
           ?.run()
