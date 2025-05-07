@@ -1,12 +1,12 @@
 import { app, BrowserWindow, nativeTheme } from "electron";
 
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+// import { fileURLToPath } from "url";
+// import { dirname, join } from "path";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
-const isDev = process.env.DEV != undefined;
+// const isDev = process.env.DEV != undefined;
 
 function createWindow() {
   // nativeTheme.themeSource = "dark";

@@ -7,11 +7,11 @@
     display: flex;
     justify-content: center;
     padding: 6px;
-    border: solid 1px transparent;
+    border: none;
     border-radius: 8px;
     outline: none;
-    color: rgba(255, 255, 255, 0.6);
-    background-color: black;
+    color: var(--text-color-darker);
+    background-color: transparent;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     font-size: 16px;
@@ -19,27 +19,25 @@
       position: absolute;
       bottom: 0;
       width: 0%;
-      height: 2px;
+      height: 4px;
       border-radius: 8px;
       content: "";
       transition: all 0.2s ease-in-out;
     }
     &:hover {
-      border-color: rgba(255, 255, 255, 0.15);
-      color: white;
-      background-color: rgba(255, 255, 255, 0.15);
+      color: var(--text-color);
+      background-color: var(--list-hover-color);
       &:before {
         width: 10%;
         background-color: rgba(109, 255, 199, 0.377);
       }
     }
     &.active {
-      border-color: rgba(255, 255, 255, 0.2);
-      color: white;
-      background-color: rgba(255, 255, 255, 0.2);
+      color: var(--text-color);
+      background-color: var(--list-selected-color); 
       &:before {
         width: 50%;
-        background-color: rgb(109, 255, 199);
+        background-color: var(--primary-color);
       }
     }
   }

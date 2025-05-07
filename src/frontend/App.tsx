@@ -6,22 +6,27 @@ import { RequestResponseDetailsHeader } from "./components/RequestResponseDetail
 import { textFetcher, TextFetcherResult } from "./Fetcher";
 import { RequestResponsePane } from "./components/RequestResponsePane";
 import { WebSocketPane } from "./components/WebSocketPane";
+import { useWebSocket } from "./useWebSocket";
 
 function App() {
   const [url, setUrl] = useState("");
   const [requestType, setRequestType] = useState<RequestType>("GET");
+  const isWebSocket = requestType === "WS";
+
+  const ws = useWebSocket();
 
   const [fetcherResult, setFetcherResult] = useState<TextFetcherResult | null>(
     null
   );
 
   const onSend = async () => {
+    if (isWebSocket) {
+      ws.connect(url);
+      return;
+    }
     const res = await textFetcher(url, requestType);
-
     setFetcherResult(res);
   };
-
-  const isWebSocket = requestType === "WS";
 
   return (
     <>
@@ -50,7 +55,7 @@ function App() {
         <RequestResponsePane res={fetcherResult} />
       )}
 
-      {isWebSocket && <WebSocketPane res={fetcherResult} />}
+      {isWebSocket && <WebSocketPane ws={ws} />}
     </>
   );
 }

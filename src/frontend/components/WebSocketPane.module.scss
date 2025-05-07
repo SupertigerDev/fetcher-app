@@ -1,0 +1,32 @@
+.webSocketPane {
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  height: 100%;
+  gap: 4px;
+}
+.eventItemContainer {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 6px;
+  border-radius: 6px;
+  background-color: var(--pane-color);
+  gap: 6px;
+  pre {
+    margin: 0;
+    word-break: break-all;
+    white-space: pre-wrap;
+  }
+  .eventItemHeader {
+    display: flex;
+    gap: 4px;
+    .darkText {
+      --OPEN: rgb(103, 255, 166);
+      --MESSAGE: rgb(107, 176, 255);
+      --CLOSE: rgb(255, 91, 91);
+      color: var(--text-color-darker);
+    }
+  }
+}

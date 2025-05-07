@@ -1,7 +1,32 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  .dark {
+    --primary-color: rgb(109, 255, 199);
+    --text-color: white;
+
+    --text-color-darker: rgba(255, 255, 255, 0.6);
+
+    --background-color: black;
+    --pane-color: rgba(255, 255, 255, 0.1);
+    --pane-border-color: rgba(255, 255, 255, 0.2);
+    
+    --list-hover-color: rgba(255, 255, 255, 0.15);
+    --list-selected-color: rgba(255, 255, 255, 0.2);
+  }
+  .light {
+    --primary-color: rgb(43, 128, 95);
+
+    --text-color: rgb(32, 32, 32);
+    --text-color-darker: rgba(32, 32, 32, 0.6);
+    
 
 
+    --background-color: #c9e5d9;
+    --pane-color: white;
+    --pane-border-color: rgba(0, 0, 0, 0.1);
+
+    --list-hover-color: rgba(255, 255, 255, 0.8);
+    --list-selected-color: white;
+  }
 }
 
 * {
@@ -14,11 +39,12 @@ html, body {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 
 }
 body {
-  color: white;
-  background-color: black;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 #root {
   display: flex;

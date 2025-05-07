@@ -44,12 +44,13 @@ export const RequestResponsePane = (props: { res: TextFetcherResult }) => {
 };
 
 export const PrettyResponse = (props: { res: TextFetcherResult }) => {
+  const darkTheme = document.body.classList.contains("dark");
   return (
     <Editor
       defaultLanguage={getExtensionFromContentType(
         props.res.response.headers.get("Content-Type") || "text"
       )}
-      theme="vs-dark"
+      theme={darkTheme ? "vs-dark" : undefined}
       defaultValue={props.res.text}
       onMount={(editor) => {
         editor.getAction("editor.action.formatDocument")?.run();
