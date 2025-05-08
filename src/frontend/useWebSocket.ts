@@ -12,6 +12,15 @@ export const useWebSocket = () => {
 
   const [events, setEvents] = useState<WebSocketEvent[]>([]);
 
+  const send = (data: string) => {
+    if (ws.current?.readyState === WebSocket.CLOSED) return;
+    ws.current?.send(data);
+    setEvents((e) => [
+      { id: crypto.randomUUID(), data, type: "MESSAGE", createdAt: Date.now() },
+      ...e,
+    ]);
+  };
+
   const connect = (url: string) => {
     setEvents([]);
     if (ws.current) {
@@ -54,7 +63,7 @@ export const useWebSocket = () => {
     };
   };
 
-  return { connect, ws, events };
+  return { connect, ws, events, send };
 };
 
 export type UseWebSocket = ReturnType<typeof useWebSocket>;

@@ -1,9 +1,23 @@
 import style from "./WebSocketPane.module.scss";
 import { UseWebSocket, WebSocketEvent } from "../useWebSocket";
+import { MonacoEditor } from "./Editor";
+import { useState } from "react";
 
 export const WebSocketPane = (props: { ws: UseWebSocket }) => {
+  const [message, setMessage] = useState("");
+
   return (
     <div className={style.webSocketPane}>
+      <div className={style.inputArea}>
+        <MonacoEditor
+          text={message}
+          language="json"
+          onChange={(e) => setMessage(e || "")}
+          autoSize
+          hideMinimap
+        />
+        <button onClick={() => props.ws.send(message)}>Send</button>
+      </div>
       {props.ws.events.map((e) => (
         <EventItem key={e.id} event={e} />
       ))}

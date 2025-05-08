@@ -8,3 +8,14 @@ export const Input = (props: InputProps) => {
     <input {...props} className={style.input + " " + (props.className || "")} />
   );
 };
+
+type TextareaProps = React.InputHTMLAttributes<HTMLTextAreaElement>;
+
+export const Textarea = (props: TextareaProps) => {
+  return (
+    <textarea
+      {...props}
+      className={style.input + " " + (props.className || "")}
+    />
+  );
+};

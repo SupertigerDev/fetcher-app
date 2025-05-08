@@ -31,3 +31,24 @@
     }
   }
 }
+
+
+.inputArea {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  background-color: var(--pane-color);
+
+  button {
+    align-self: flex-end;
+    padding: 8px;
+    margin: 6px;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-color-invert);
+    background-color: var(--primary-color);
+    cursor: pointer;
+
+  }
+}

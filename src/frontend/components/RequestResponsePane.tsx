@@ -1,9 +1,8 @@
 import style from "./RequestResponsePane.module.scss";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { TextFetcherResult } from "../Fetcher";
 import { ResponseList, ResponseType } from "./ResponseList";
-import { Editor, OnMount } from "@monaco-editor/react";
-import { useTheme } from "../theme";
+import { MonacoEditor } from "./Editor";
 
 const contentTypeToExtensionMap: Record<string, string> = {
   "application/json": "json",
@@ -22,12 +21,9 @@ const getExtensionFromContentType = (contentType: string) => {
 export const RequestResponsePane = (props: { res: TextFetcherResult }) => {
   const [responseType, setResponseType] = useState<ResponseType>("PRETTY");
 
-
   useEffect(() => {
     setResponseType("PRETTY");
   }, [props.res]);
-
-
 
   return (
     <div className={style.requestResponsePane}>
@@ -52,30 +48,11 @@ export const RequestResponsePane = (props: { res: TextFetcherResult }) => {
 };
 
 export const PrettyResponse = (props: { res: TextFetcherResult }) => {
-  const darkTheme = document.body.classList.contains("dark");
-  const {onThemeChanged} = useTheme();
-  const editorRef = useRef<Parameters<OnMount>[0]>(null);
-  onThemeChanged((theme) => {
-    editorRef.current?.updateOptions({theme: theme === "dark" ? "vs-dark" : "vs-light"})
-  })
+  const language = getExtensionFromContentType(
+    props.res.response.headers.get("Content-Type") || "text"
+  );
 
   return (
-    <Editor
-      defaultLanguage={getExtensionFromContentType(
-        props.res.response.headers.get("Content-Type") || "text"
-      )}
-      theme={darkTheme ? "vs-dark" : undefined}
-      defaultValue={props.res.text}
-      onMount={(editor) => {
-        editorRef.current = editor;
-        editor
-          .getAction("editor.action.formatDocument")
-          ?.run()
-          .then(() => {
-            editor.updateOptions({ readOnly: true });
-          });
-      }}
-      options={{ domReadOnly: true }}
-    />
+    <MonacoEditor language={language} text={props.res.text} format readOnly />
   );
 };

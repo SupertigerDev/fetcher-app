@@ -2,6 +2,7 @@
   .dark {
     --primary-color: rgb(109, 255, 199);
     --text-color: white;
+    --text-color-invert: rgb(32, 32, 32);
 
     --text-color-darker: rgba(255, 255, 255, 0.6);
 
@@ -16,6 +17,7 @@
     --primary-color: rgb(43, 128, 95);
 
     --text-color: rgb(32, 32, 32);
+    --text-color-invert: white;
     --text-color-darker: rgba(32, 32, 32, 0.6);
     
 
@@ -53,8 +55,4 @@ body {
   height: 100%;
   margin: 8px;
   gap: 8px;
-}
-
-.monaco-editor .cursors-layer > .cursor {
-  display: none !important;
 }

@@ -9,7 +9,9 @@ import { WebSocketPane } from "./components/WebSocketPane";
 import { useWebSocket } from "./useWebSocket";
 
 function App() {
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(
+    "https://supertiger.nerimity.com/trackdispresence/260371016348336128"
+  );
   const [requestType, setRequestType] = useState<RequestType>("GET");
   const isWebSocket = requestType === "WS";
 
@@ -64,7 +66,6 @@ function App() {
         </div>
       )}
       <Footer res={fetcherResult} />
-
     </>
   );
 }
