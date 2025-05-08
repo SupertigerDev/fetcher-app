@@ -51,7 +51,7 @@ export const ThemeProvider = (props: { children: ReactNode }) => {
       return () => {
         delete onThemeChangedFns.current[id];
       };
-    }, []);
+    }, [callback, id]);
   };
 
   return (
