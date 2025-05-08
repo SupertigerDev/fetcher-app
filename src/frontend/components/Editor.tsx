@@ -16,9 +16,9 @@ interface MonacoEditorProps {
 export const MonacoEditor = (props: MonacoEditorProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const darkTheme = document.body.classList.contains("dark");
-  const { onThemeChanged } = useTheme();
+  const { useThemeChangeListener } = useTheme();
   const [editor, setEditor] = useState<Parameters<OnMount>[0] | null>(null);
-  onThemeChanged((theme) => {
+  useThemeChangeListener((theme) => {
     editor?.updateOptions({
       theme: theme === "dark" ? "vs-dark" : "vs-light",
     });

@@ -1,64 +1,73 @@
-import { createContext, ReactNode, useContext, useEffect, useId, useInsertionEffect, useRef, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 
-
-type Theme = "dark" | "light"
+type Theme = "dark" | "light";
 const ThemeContext = createContext({
   theme: "dark" as Theme,
-  toggleTheme: () => { },
-  onThemeChanged: (cb: (theme: Theme) => void) => { }
+  toggleTheme: () => {},
+  useThemeChangeListener: (cb: (theme: Theme) => void) => {},
 });
 
 export const useTheme = () => {
   return useContext(ThemeContext);
-}
-
+};
 
 export const ThemeProvider = (props: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>(localStorage.getItem('theme') as Theme || "dark");
+  const [theme, setTheme] = useState<Theme>(
+    (localStorage.getItem("theme") as Theme) || "dark"
+  );
   const onThemeChangedFns = useRef<Record<string, (theme: Theme) => void>>({});
 
   useEffect(() => {
-    applyThemeFromStorage()
-  }, [])
+    applyThemeFromStorage();
+  }, []);
 
   const toggleTheme = () => {
     animateTheme();
 
-    const darkThemeApplied = document.body.classList.toggle('dark');
+    const darkThemeApplied = document.body.classList.toggle("dark");
 
-    const newTheme = darkThemeApplied ? "dark" : "light"
-    setTheme(newTheme)
-    localStorage.setItem('theme', newTheme);
+    const newTheme = darkThemeApplied ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
     applyThemeFromStorage();
     Object.values(onThemeChangedFns.current).forEach((cb) => {
       cb(theme);
-    })
-  }
+    });
+  };
 
-  const onThemeChanged = (callback: (theme: Theme) => void) => {
+  const useThemeChangeListener = (callback: (theme: Theme) => void) => {
     const id = useId();
 
     useEffect(() => {
       onThemeChangedFns.current[id] = callback;
       return () => {
         delete onThemeChangedFns.current[id];
-      }
-    }, [])
-  }
+      };
+    }, []);
+  };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, onThemeChanged }}>
+    <ThemeContext.Provider
+      value={{ theme, toggleTheme, useThemeChangeListener }}
+    >
       {props.children}
     </ThemeContext.Provider>
-  )
-}
-
+  );
+};
 
 function animateTheme() {
   const styleEl = document.createElement("style");
   styleEl.innerHTML = `
   * {
-    transition: 0.2s;
+    transition: 0.2s !important;
   }
   `;
   document.head.appendChild(styleEl);
@@ -68,8 +77,8 @@ function animateTheme() {
 }
 
 export function applyThemeFromStorage() {
-  document.body.classList.remove('dark');
-  document.body.classList.remove('light');
-  const currentTheme = localStorage.getItem('theme') || "dark";
+  document.body.classList.remove("dark");
+  document.body.classList.remove("light");
+  const currentTheme = localStorage.getItem("theme") || "dark";
   document.body.classList.add(currentTheme);
 }
