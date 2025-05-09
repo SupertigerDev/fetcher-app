@@ -1,13 +1,15 @@
 {
   "name": "fetcher-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "dist/main.js",
   "scripts": {
     "electron:dev": "concurrently \"vite\" \"tsc-watch -p tsconfig-electron.json --onSuccess \\\"electron .\\\"\"",
+    "electron:build": "vite build && tsc -p tsconfig-electron.json && electron-builder --win",
     "dev": "vite",
     "build": "tsc -b && vite build",
+
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -32,6 +34,21 @@
     "tsc-watch": "^6.2.1",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
-    "vite": "^6.3.1"
+    "vite": "^6.3.1",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "supertiger.fetcher-app",
+    "productName": "Fetcher App",
+    "directories": {
+      "output": "electron-dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "portable"
+        }
+      ]
+    }
   }
 }

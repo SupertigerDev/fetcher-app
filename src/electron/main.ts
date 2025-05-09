@@ -23,11 +23,11 @@ function createWindow() {
     },
   });
 
-  mainWindow.loadURL("http://localhost:5173");
-  mainWindow.webContents.openDevTools({ mode: "detach" });
+  // mainWindow.loadURL("http://localhost:5173");
+  // mainWindow.webContents.openDevTools({ mode: "detach" });
   // if (isDev) {
   // } else {
-  //   mainWindow.loadFile("dist/index.html");
+  mainWindow.loadFile("dist/index.html");
   // }
 }
 
