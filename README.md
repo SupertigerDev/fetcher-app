@@ -2,8 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A brief and engaging description of what your Fetcher App does and its key features. Highlight the core functionality and what makes it useful.
-
+Fetcher App is a streamlined and intuitive tool designed for making HTTP requests. If you find yourself needing a simpler alternative to Postman for quick API interactions, Fetcher App provides an easy-to-use interface for sending requests and inspecting responses.
 ## Screenshots
 
 <img src="https://github.com/user-attachments/assets/6dedc541-b0cc-4d8d-85c1-5e24a14817e0" width="40%"/><br/>
